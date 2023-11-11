@@ -12,7 +12,7 @@ function Accelerometer() {
         const { x, y, z } = event.acceleration;
         setSensorData(currentData => ({
             ...currentData,
-            accelerometer: [...currentData.accelerometer, [ x, y, z ]]
+            accelerometer: [...currentData.accelerometer,  "(x: " + x + ", y: " + y +", z: " + z + "), "]
         }));
     };
 
