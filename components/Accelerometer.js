@@ -34,19 +34,20 @@ function Accelerometer() {
 
     return (
         <div>
-            <button onClick={isRunning ? stopDemo : startDemo}>
-                {isRunning ? 'Stop Demo' : 'Start Demo'}
-            </button>
+            <div>
+                <button onClick={isRunning ? stopDemo : startDemo}>
+                    {isRunning ? 'Stop Demo' : 'Start Demo'}
+                </button>
+            </div>
             <div>
                 {data.length > 0 && (
                     <p>
-                        X: {data[data.length - 1].x}, 
-                        Y: {data[data.length - 1].y}, 
-                        Z: {data[data.length - 1].z}
+                        X: {data[data.length - 1].x.toFixed(2)}, 
+                        Y: {data[data.length - 1].y.toFixed(2)}, 
+                        Z: {data[data.length - 1].z.toFixed(2)}
                     </p>
                 )}
             </div>
-
         </div>
     );
 }
