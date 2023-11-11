@@ -61,6 +61,7 @@ function Accelerometer() {
         setIsRunning(false);
 
         // Send data to the server for OpenAI processing
+        sendLearningDataToMockServer(sensorData);
         sendDataToServer(sensorData);
     };
 
@@ -84,6 +85,19 @@ function Accelerometer() {
             console.error('Error sending data to server:', error);
         }
     };
+
+    function sendLearningDataToMockServer(data) {
+        fetch('https://ent61ageww28i.x.pipedream.net', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => console.error('Error:', error));
+      }
 
     return (
         <div>
