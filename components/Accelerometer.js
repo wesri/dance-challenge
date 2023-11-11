@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import styles from '../styles/Home.module.css';
 
 function Accelerometer() {
     const [isRunning, setIsRunning] = useState(false);
+    const [isDone, setIsDone] = useState(false);
     const [lastMotionCheck, setLastMotionCheck] = useState(0);
     const [lastOriCheck, setLastOriCheck] = useState(0);
     const [analysisResults, setAnalysisResults] = useState(false);
@@ -67,6 +69,7 @@ function Accelerometer() {
         window.removeEventListener('deviceorientation', handleOriEvent);
         // Remove event listener for geomagnetic data if applicable
         setIsRunning(false);
+        setIsDone(true);
 
         // Send data to the server for OpenAI processing
         sendLearningDataToMockServer(sensorData);
@@ -113,17 +116,27 @@ function Accelerometer() {
 
     return (
         <div>
-            <button onClick={isRunning ? stopDemo : startDemo}>
-                {isRunning ? 'Stop Demo' : 'Start Demo'}
-            </button>
             {isRunning && (
-                <div>
-                    <p>Collecting data...</p>
+                <div className={styles.center}>
+                    Dance now! Hold your phone on your right hand.
                 </div>
             )}
+
+            {!isDone && (
+            <button className={styles.button} onClick={isRunning ? stopDemo : startDemo}>
+                {isRunning ? 'I am done!' : 'Start Dancing!'}
+            </button>
+            )}
+            
             {analysisResults && (
                 <div>
-                    <p>{analysisResults}</p>
+                    <p>Your dance was {analysisResults} perfect!</p>
+                </div>
+            )}
+
+            {isDone && !analysisResults && (
+                <div>
+                    <p>Loading results...</p>
                 </div>
             )}
         </div>
