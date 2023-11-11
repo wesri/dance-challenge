@@ -9,7 +9,7 @@ function Accelerometer() {
     });
 
     const handleMotionEvent = (event) => {
-        const timestamp = Date.now()
+        const time = Date.now()
         const { x, y, z } = event.acceleration;
         setSensorData(currentData => ({
             ...currentData,
@@ -21,7 +21,7 @@ function Accelerometer() {
         const alpha = event.alpha;
         const beta = event.beta;
         const gamma = event.gamma;
-        const timestamp = Date.now()
+        const time = Date.now()
         setSensorData(currentData => ({
             ...currentData,
             gyroscope: [...currentData.gyroscope, "(alpha: " + alpha + ", beta: " + beta + ", gamma: " + gamma + ", time: " + time + ")"]
