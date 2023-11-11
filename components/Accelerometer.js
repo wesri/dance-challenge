@@ -24,7 +24,7 @@ function Accelerometer() {
         const timestamp = Date.now()
         setSensorData(currentData => ({
             ...currentData,
-            gyroscope: [...currentData.gyroscope, "(alpha: " + x + ", beta: " + y + ", gamma: " + z + ", time: " + time + ")"]
+            gyroscope: [...currentData.gyroscope, "(alpha: " + alpha + ", beta: " + beta + ", gamma: " + gamma + ", time: " + time + ")"]
         }));
     };
 
