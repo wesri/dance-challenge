@@ -11,7 +11,7 @@ export default async function (req, res) {
 console.log(req.body);
   const completion = await openai.completions.create({
     model: "text-davinci-003",
-    prompt: generatePrompt(req.body.data),
+    prompt: generatePrompt(req.body.result.data),
     max_tokens: 2000,
   });
   console.log(completion.choices[0].text);
