@@ -5,26 +5,33 @@ function Accelerometer() {
     const [analysisResults, setAnalysisResults] = useState(false);
     const [sensorData, setSensorData] = useState({
         accelerometer: [],
+        gAcc: [],
         gyroscope: [],
+        orientation: [],
+
     });
 
     const handleMotionEvent = (event) => {
         const time = Date.now()
         const { x, y, z } = event.acceleration;
+        const { gx, gy, gz } = event.accelerationIncludingGravity;
+        const { gyrox, gyroy, gyroz } = event.rotationRate;
         setSensorData(currentData => ({
             ...currentData,
-            accelerometer: [...currentData.accelerometer,  "(x: " + x + ", y: " + y + ", z: " + z + ", time: " + time + ")"]
+            accelerometer: [...currentData.accelerometer,  "(x: " + x + ", y: " + y + ", z: " + z + ", time: " + time + ")"],
+            gAcc: [...currentData.gAcc,  "(gx: " + x + ", gy: " + y + ", gz: " + z + ", time: " + time + ")"],
+            gyroscope: [...currentData.gyroscope,  "(gyrox: " + x + ", gyroy: " + y + ", gyroz: " + z + ", time: " + time + ")"],
         }));
     };
 
-    const handleGyroEvent = (event) => {
+    const handleOriEvent = (event) => {
         const alpha = event.alpha;
         const beta = event.beta;
         const gamma = event.gamma;
         const time = Date.now()
         setSensorData(currentData => ({
             ...currentData,
-            gyroscope: [...currentData.gyroscope, "(alpha: " + alpha + ", beta: " + beta + ", gamma: " + gamma + ", time: " + time + ")"]
+            orientation: [...currentData.orientation, "(alpha: " + alpha + ", beta: " + beta + ", gamma: " + gamma + ", time: " + time + ")"]
         }));
     };
 
@@ -34,14 +41,14 @@ function Accelerometer() {
                 .then(permissionState => {
                     if (permissionState === 'granted') {
                         window.addEventListener('devicemotion', handleMotionEvent);
-                        window.addEventListener('deviceorientation', handleGyroEvent);
+                        window.addEventListener('deviceorientation', handleOriEvent);
                         // Add event listener for geomagnetic data if applicable
                     }
                 })
                 .catch(console.error);
         } else {
             window.addEventListener('devicemotion', handleMotionEvent);
-            window.addEventListener('deviceorientation', handleGyroEvent);
+            window.addEventListener('deviceorientation', handleOriEvent);
             // Add event listener for geomagnetic data if applicable
         }
         setIsRunning(true);
@@ -49,7 +56,7 @@ function Accelerometer() {
 
     const stopDemo = () => {
         window.removeEventListener('devicemotion', handleMotionEvent);
-        window.removeEventListener('deviceorientation', handleGyroEvent);
+        window.removeEventListener('deviceorientation', handleOriEvent);
         // Remove event listener for geomagnetic data if applicable
         setIsRunning(false);
 
