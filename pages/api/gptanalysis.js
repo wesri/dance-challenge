@@ -1,21 +1,26 @@
-import { Configuration, OpenAIApi } from "openai";
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
 });
-const openai = new OpenAIApi(configuration);
+
 
 export default async function (req, res) {
-  const completion = await openai.createCompletion({
-    model: "text-davinci-002",
-    prompt: generatePrompt(req.body.idea),
-    temperature: 0.8,
-    max_tokens: 260
+console.log(req.body);
+  const completion = await openai.completions.create({
+    model: "text-davinci-003",
+    prompt: generatePrompt(req.body.data),
+    max_tokens: 260,
   });
-  res.status(200).json({ result: completion.data.choices[0].text });
+  console.log(completion.choices[0].text);
+  res.status(200).json({ result: completion.choices[0].text });
 }
 
+
 function generatePrompt(danceData) {
+    
     return `You are now evaluating how well people are dancing. Analyze how well the person is moving their hand up and down. The following data is from accelerometer from a phone.
   
   Data: ${danceData}
