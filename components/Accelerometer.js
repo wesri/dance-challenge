@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 function Accelerometer() {
     const [isRunning, setIsRunning] = useState(false);
+    const [lastMotionCheck, setLastMotionCheck] = useState(0);
+    const [lastOriCheck, setLastOriCheck] = useState(0);
     const [analysisResults, setAnalysisResults] = useState(false);
     const [sensorData, setSensorData] = useState({
         accelerometer: [],
@@ -16,12 +18,15 @@ function Accelerometer() {
         const { x, y, z } = event.acceleration;
         const { gx, gy, gz } = event.accelerationIncludingGravity;
         const { gyrox, gyroy, gyroz } = event.rotationRate;
-        setSensorData(currentData => ({
-            ...currentData,
-            accelerometer: [...currentData.accelerometer,  "(x: " + x + ", y: " + y + ", z: " + z + ", time: " + time + ")"],
-            gAcc: [...currentData.gAcc,  "(gx: " + x + ", gy: " + y + ", gz: " + z + ", time: " + time + ")"],
-            gyroscope: [...currentData.gyroscope,  "(gyrox: " + x + ", gyroy: " + y + ", gyroz: " + z + ", time: " + time + ")"],
-        }));
+        if (lastMotionCheck + 500 > time) {
+            setSensorData(currentData => ({
+                ...currentData,
+                accelerometer: [...currentData.accelerometer,  "(x: " + x + ", y: " + y + ", z: " + z + ", time: " + time + ")"],
+                gAcc: [...currentData.gAcc,  "(gx: " + x + ", gy: " + y + ", gz: " + z + ", time: " + time + ")"],
+                gyroscope: [...currentData.gyroscope,  "(gyrox: " + x + ", gyroy: " + y + ", gyroz: " + z + ", time: " + time + ")"],
+            }));
+            setLastMotionCheck(time)
+        }
     };
 
     const handleOriEvent = (event) => {
@@ -29,10 +34,13 @@ function Accelerometer() {
         const beta = event.beta;
         const gamma = event.gamma;
         const time = Date.now()
-        setSensorData(currentData => ({
-            ...currentData,
-            orientation: [...currentData.orientation, "(alpha: " + alpha + ", beta: " + beta + ", gamma: " + gamma + ", time: " + time + ")"]
-        }));
+        if (lastOriCheck + 500 > time) {
+            setSensorData(currentData => ({
+                ...currentData,
+                orientation: [...currentData.orientation, "(alpha: " + alpha + ", beta: " + beta + ", gamma: " + gamma + ", time: " + time + ")"]
+            }));
+            setLastOriCheck(time)
+        }
     };
 
     const startDemo = () => {
