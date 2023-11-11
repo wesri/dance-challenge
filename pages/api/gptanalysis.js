@@ -15,7 +15,7 @@ console.log(req.body);
     max_tokens: 2000,
   });
   console.log(completion.choices[0].text);
-  res.status(200).json({ result: req.body });
+  res.status(200).json({ result: completion.choices[0].text });
 }
 
 
