@@ -86,17 +86,21 @@ function Accelerometer() {
         }
     };
 
-    function sendLearningDataToMockServer(data) {
-        fetch('https://ent61ageww28i.x.pipedream.net', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch((error) => console.error('Error:', error));
+    const sendLearningDataToMockServer = async (data) => {
+        console.log(data)
+        try {
+            const response = await fetch('https://ent61ageww28i.x.pipedream.net', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data }),
+            });
+            const analysisResultsData = await response.json();
+            const analysisResultsText = await analysisResultsData.result;
+        } catch (error) {
+            console.error('Error sending data to learning server:', error);
+        }
       }
 
     return (
