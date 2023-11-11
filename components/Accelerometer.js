@@ -9,18 +9,22 @@ function Accelerometer() {
     });
 
     const handleMotionEvent = (event) => {
+        const timestamp = Date.now()
         const { x, y, z } = event.acceleration;
         setSensorData(currentData => ({
             ...currentData,
-            accelerometer: [...currentData.accelerometer,  "(x: " + x + ", y: " + y +", z: " + z + "), "]
+            accelerometer: [...currentData.accelerometer,  "(x: " + x + ", y: " + y + ", z: " + z + ", time: " + time + ")"]
         }));
     };
 
     const handleGyroEvent = (event) => {
-        const { alpha, beta, gamma } = event.rotationRate;
+        const alpha = event.alpha;
+        const beta = event.beta;
+        const gamma = event.gamma;
+        const timestamp = Date.now()
         setSensorData(currentData => ({
             ...currentData,
-            gyroscope: [...currentData.gyroscope, [ alpha, beta, gamma ]]
+            gyroscope: [...currentData.gyroscope, "(alpha: " + x + ", beta: " + y + ", gamma: " + z + ", time: " + time + ")"]
         }));
     };
 
