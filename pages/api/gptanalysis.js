@@ -12,7 +12,7 @@ console.log(req.body);
   const completion = await openai.completions.create({
     model: "text-davinci-003",
     prompt: generatePrompt(req.body.data),
-    max_tokens: 50000,
+    max_tokens: 2000,
   });
   console.log(completion.choices[0].text);
   res.status(200).json({ result: completion.choices[0].text });
