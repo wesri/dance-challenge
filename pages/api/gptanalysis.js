@@ -21,8 +21,8 @@ console.log(req.body);
 
 function generatePrompt(danceData) {
     
-    return `You are now evaluating how well people are dancing. Analyze how well the person is moving their hand up and down. The following data is from accelerometer from a phone.
-  
+    return `You are now evaluating how well people performing dance moves. Analyze how well the person is moving their hand up and down. Do not give a text-based evaluation of the situation or of the movement, but only return a percentage of how successful the dance was. The following data is from moving a phone. The data contains following things: acceleration, accelerationIncludingGravity and rotationRate from devicemotion event, and orientation from deviceorientation event. There are timestamps as well. Based on all this information you should know how the phone was moved and with what speed.
+
   Data: ${danceData}
   Dance evaluation:`; 
   }
