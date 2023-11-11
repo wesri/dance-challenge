@@ -38,10 +38,15 @@ function Accelerometer() {
                 {isRunning ? 'Stop Demo' : 'Start Demo'}
             </button>
             <div>
-                {data.map((datum, index) => (
-                    <p key={index}>X: {datum.x}, Y: {datum.y}, Z: {datum.z}</p>
-                ))}
+                {data.length > 0 && (
+                    <p>
+                        X: {data[data.length - 1].x}, 
+                        Y: {data[data.length - 1].y}, 
+                        Z: {data[data.length - 1].z}
+                    </p>
+                )}
             </div>
+
         </div>
     );
 }
