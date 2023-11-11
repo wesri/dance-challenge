@@ -12,7 +12,7 @@ function Accelerometer() {
         const { x, y, z } = event.acceleration;
         setSensorData(currentData => ({
             ...currentData,
-            accelerometer: [...currentData.accelerometer, { x, y, z }]
+            accelerometer: [...currentData.accelerometer, [ x, y, z ]]
         }));
     };
 
@@ -20,7 +20,7 @@ function Accelerometer() {
         const { alpha, beta, gamma } = event.rotationRate;
         setSensorData(currentData => ({
             ...currentData,
-            gyroscope: [...currentData.gyroscope, { alpha, beta, gamma }]
+            gyroscope: [...currentData.gyroscope, [ alpha, beta, gamma ]]
         }));
     };
 
@@ -54,6 +54,7 @@ function Accelerometer() {
     };
 
     const sendDataToServer = async (data) => {
+        console.log(data)
         try {
             const response = await fetch('/api/gptanalysis', {
                 method: 'POST',
